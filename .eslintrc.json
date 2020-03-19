@@ -1,0 +1,99 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true,
+        "jest": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
+    "globals": {
+        "Map": true,
+        "Promise": true,
+        "module": true,
+        "process": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "plugins": [
+        "react",
+        "react-hooks",
+        "jest"
+    ],
+    "rules": {
+        "comma-dangle": 0,
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/display-name": "warn",
+        "react/prop-types": "error",
+        "no-unused-vars": "warn",
+        "no-unused-expressions": 0,
+        "default-case": 0,
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "max-len": ["error", {
+            "code": 150,
+            "tabWidth":4,
+            "comments":150,
+            "ignoreComments": true,
+            "ignoreUrls": true,
+            "ignoreRegExpLiterals": true
+        }],
+        "consistent-return": 0,
+        "no-underscore-dangle": 0,
+        "class-methods-use-this": 0,
+        "no-console": 2,
+        "prefer-template": 1,
+        "no-extra-boolean-cast": 0,
+        "no-unexpected-multiline": "warn",
+        "semi": ["error", "always"],
+        "indent": ["error", 4],
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-indent-props": 0,
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
+        "no-multiple-empty-lines": ["error", { "max": 1 }],
+        "no-param-reassign": ["error", { "props": false }],
+        "object-curly-newline": ["error", {
+            "ObjectExpression": { "consistent": true },
+            "ObjectPattern": { "consistent": true },
+            "ImportDeclaration": { "consistent": true },
+            "ExportDeclaration": { "consistent": true }
+        }],
+        "one-var": ["error", { "initialized": "never" }],
+        "one-var-declaration-per-line": ["error", "initializations"],
+        "react/destructuring-assignment": 0,
+        "react/jsx-one-expression-per-line": 0,
+        "react/jsx-sort-default-props": [2, {
+            "ignoreCase": true
+        }],
+        "react/jsx-sort-props": [2, {
+            "callbacksLast": false,
+            "shorthandFirst": false,
+            "shorthandLast": false,
+            "ignoreCase": true,
+            "noSortAlphabetically": false,
+            "reservedFirst": false
+        }],
+        "react/no-array-index-key": 0,
+        "react/prefer-stateless-function": 0,
+        "react/sort-comp": 0,
+        "react/sort-prop-types": [2, {
+            "callbacksLast": false,
+            "ignoreCase": true,
+            "requiredFirst": false,
+            "sortShapeProp": true,
+            "noSortAlphabetically": false
+        }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error"
+    }
+}
