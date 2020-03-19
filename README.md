@@ -7,7 +7,7 @@ Run these commands in the same order
 
 ## How to check code coverage
 Run this command
-npm run coverage
+1. npm run coverage
 
 ## Project dependencies
 1. react
@@ -19,4 +19,4 @@ npm run coverage
 ## How to check for Linting
 This project is configured with eslint (rules recommended by eslint, react, airbnb)
 Setup eslint in vscode and turn on "Auto Fix On Save" option
-
+```npm run coverage``` also checks for linting issues in all files
