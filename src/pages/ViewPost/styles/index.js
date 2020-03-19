@@ -13,8 +13,8 @@ export const CardsContainer = Styled.div`
     &:hover{
         box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     }
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
+    background: -webkit-linear-gradient(left, #e6ede8, #c1c7c3);
+    background: linear-gradient(to right, #e6ede8, #c1c7c3);
 `;
 
 export const Card = Styled.div`

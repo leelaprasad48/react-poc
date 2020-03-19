@@ -26,8 +26,8 @@ export const StyledTd = Styled.td`
     cursor: pointer;
 `;
 export const StyledContainer = Styled.body`
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
+    background: -webkit-linear-gradient(left, #e6ede8, #c1c7c3);
+    background: linear-gradient(to right, #e6ede8, #c1c7c3);
 `;
 export const StyledSection = Styled.section`
     margin: 30px;
