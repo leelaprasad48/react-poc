@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { fetchUserById, fetchAllPosts, fetchAllUsers } from '../actions';
+import { fetchAllPosts, fetchAllUsers } from '../actions';
 import * as types from '../actionTypes';
 
 const mockStore = configureMockStore([thunk]);
@@ -24,15 +24,6 @@ describe('posts and users actions', () => {
     });
     afterEach(() => {
         mockAxios.restore();
-    });
-
-    it('should create an action to get userById when fetchUserById is called', async () => {
-        const expectedAction = [{
-            type: types.FETCH_USER_BY_ID,
-            payload: 1
-        }];
-        await store.dispatch(fetchUserById(1));
-        expect(store.getActions()).toEqual(expectedAction);
     });
 
     it('should create an action FETCH_ALL_POSTS_IN_PROGRESS', async () => {

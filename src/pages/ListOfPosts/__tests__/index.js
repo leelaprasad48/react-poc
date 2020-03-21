@@ -5,9 +5,9 @@ import { ListOfPosts } from '../index';
 import { APP_ROUTES } from '../../../configs/constants';
 
 const defaultProps = {
-    error: false,
+    postsError: false,
     fetchAllPosts: jest.fn(),
-    loading: false,
+    postsLoading: false,
     history: { push: jest.fn() },
     postsList: [{
         body: 'sample body 1',
@@ -37,19 +37,19 @@ describe('ListOfPosts', () => {
     });
     it('should render correct data', () => {
         const wrapper = getWrapper(defaultProps);
+        expect(wrapper.find('td#id').at(0).text()).toEqual('1');
         expect(wrapper.find('td#userid').at(0).text()).toEqual('1');
         expect(wrapper.find('td#title').at(0).text()).toEqual('sample title 1');
-        expect(wrapper.find('td#body').at(0).text()).toEqual('sample body 1');
         wrapper.find('tr').at(1).prop('onClick')('1');
-        expect(defaultProps.history.push).toBeCalledWith(`${APP_ROUTES.VIEW_POST}?userId=1`);
+        expect(defaultProps.history.push).toBeCalledWith(`${APP_ROUTES.VIEW_POST}?postId=1`);
     });
     it('should show loading when the api is in progress', () => {
-        const wrapper = getWrapper({ ...defaultProps, loading: true });
+        const wrapper = getWrapper({ ...defaultProps, postsLoading: true });
         expect(wrapper.find('div#loading').text()).toEqual('Loading...');
     });
 
     it('should show error when the error occoured in the API', () => {
-        const wrapper = getWrapper({ ...defaultProps, error: true });
+        const wrapper = getWrapper({ ...defaultProps, postsError: true });
         expect(wrapper.find('div#error').text()).toEqual('Something went wrong!');
     });
 

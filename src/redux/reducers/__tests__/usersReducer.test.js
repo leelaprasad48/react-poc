@@ -4,20 +4,29 @@ import * as types from '../../actionTypes';
 describe('user reducer', () => {
     const initialState = {
         usersList: [],
-        loading: false,
-        error: false,
+        usersLoading: false,
+        usersError: false,
         userData: {}
     };
     it('should return initial state', () => {
         expect(userReducer(undefined, {})).toEqual(initialState);
     });
 
-    it('should return correct loading state on FETCH_ALL_USERS_IN_PROGRESS action', () => {
+    it('should return correct usersLoading state on FETCH_ALL_USERS_IN_PROGRESS action', () => {
         expect(userReducer(initialState, {
             type: types.FETCH_ALL_USERS_IN_PROGRESS
         })).toEqual({
             ...initialState,
-            loading: true
+            usersLoading: true
+        });
+    });
+
+    it('should return correct usersError state on FETCH_ALL_USERS_ERROR action', () => {
+        expect(userReducer(initialState, {
+            type: types.FETCH_ALL_USERS_ERROR
+        })).toEqual({
+            ...initialState,
+            usersError: true
         });
     });
 
@@ -49,7 +58,7 @@ describe('user reducer', () => {
         })).toEqual({
             ...initialState,
             usersList: newPostArray,
-            loading: false,
+            usersLoading: false,
             userData: { id: 3,
                 userId: 3,
                 title: 'sample post 3',
@@ -57,12 +66,12 @@ describe('user reducer', () => {
         });
     });
 
-    it('should return error on FETCH_ALL_USERS_ERROR action', () => {
+    it('should return usersError on FETCH_ALL_USERS Error action', () => {
         expect(userReducer(initialState, {
-            type: types.FETCH_ALL_USERS_ERROR
+            type: types.FETCH_ALL_USERS
         })).toEqual({
             ...initialState,
-            error: true
+            usersError: false
         });
     });
 });

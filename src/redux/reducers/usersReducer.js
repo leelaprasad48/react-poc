@@ -2,8 +2,8 @@ import { FETCH_ALL_USERS_SUCCESS, FETCH_ALL_USERS_IN_PROGRESS, FETCH_ALL_USERS_E
 
 const initialState = {
     usersList: [],
-    loading: false,
-    error: false,
+    usersLoading: false,
+    usersError: false,
     userData: {}
 };
 
@@ -12,21 +12,21 @@ export default function (state = initialState, action) {
     case FETCH_ALL_USERS_IN_PROGRESS: {
         return {
             ...state,
-            loading: true
+            usersLoading: true
         };
     }
     case FETCH_ALL_USERS_SUCCESS: {
         return {
             ...state,
-            loading: false,
+            usersLoading: false,
             usersList: state.usersList.concat(action.payload)
         };
     }
     case FETCH_ALL_USERS_ERROR: {
         return {
             ...state,
-            loading: false,
-            error: true
+            usersLoading: false,
+            usersError: true
         };
     }
     case FETCH_USER_BY_ID: {
@@ -35,7 +35,8 @@ export default function (state = initialState, action) {
         return {
             ...state,
             userData: userDetails[0],
-            error: !hasData
+            usersLoading: false,
+            usersError: !hasData
         };
     }
     default:

@@ -9,14 +9,14 @@ import { TableContainer, StyledTable, StyledTh, StyledTd, StyledContainer, Style
 import { APP_ROUTES } from '../../configs/constants';
 
 export function ListOfPosts(props) {
-    const { postsList, history, loading, error, fetchAllPosts } = props;
+    const { postsList, history, postsLoading: loading, postsError: error, fetchAllPosts } = props;
     useEffect(() => {
         if (postsList.length === 0) {
             fetchAllPosts();
         }
     }, [postsList, fetchAllPosts]);
-    function onPostClick(userId) {
-        history.push(`${APP_ROUTES.VIEW_POST}?userId=${userId}`);
+    function onPostClick(post) {
+        history.push(`${APP_ROUTES.VIEW_POST}?postId=${post}`);
     }
 
     return (
@@ -31,22 +31,21 @@ export function ListOfPosts(props) {
                         <StyledTable>
                             <thead>
                                 <StyledTr>
+                                    <StyledTh>Id</StyledTh>
                                     <StyledTh>User Id</StyledTh>
                                     <StyledTh>Title</StyledTh>
-                                    <StyledTh>Body</StyledTh>
                                 </StyledTr>
                             </thead>
                             <tbody>
                                 {postsList.map((post) => (
-                                    <StyledTr key={post.id} onClick={() => onPostClick(post.userId)}>
+                                    <StyledTr key={post.id} onClick={() => onPostClick(post.id)}>
+                                        <StyledTd id="id">{post.id}</StyledTd>
                                         <StyledTd id="userid">{post.userId}</StyledTd>
                                         <StyledTd id="title">{post.title}</StyledTd>
-                                        <StyledTd id="body">{post.body}</StyledTd>
                                     </StyledTr>
                                 ))}
                             </tbody>
                         </StyledTable>
-
                     </TableContainer>
                 </StyledSection>
             )}
@@ -59,12 +58,11 @@ const mapStateToProps = (state) => {
 };
 
 ListOfPosts.propTypes = {
-    error: PropTypes.bool.isRequired,
     fetchAllPosts: PropTypes.func.isRequired,
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
+    postsError: PropTypes.bool.isRequired,
     postsList: PropTypes.arrayOf(
         PropTypes.shape({
             body: PropTypes.string.isRequired,
@@ -72,7 +70,8 @@ ListOfPosts.propTypes = {
             title: PropTypes.string.isRequired,
             userId: PropTypes.number.isRequired,
         }).isRequired
-    ).isRequired
+    ).isRequired,
+    postsLoading: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, { fetchAllPosts })(withRouter(ListOfPosts));

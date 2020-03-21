@@ -25,15 +25,17 @@ export const StyledTd = Styled.td`
     border-bottom: solid 1px rgba(255,255,255,0.1);
     cursor: pointer;
 `;
-export const StyledContainer = Styled.body`
+export const StyledContainer = Styled.div`
     background: -webkit-linear-gradient(left, #e6ede8, #c1c7c3);
     background: linear-gradient(to right, #e6ede8, #c1c7c3);
+    max-width: 500px;
+    margin: auto;
 `;
 export const StyledSection = Styled.section`
     margin: 30px;
 `;
 export const StyledTr = Styled.tr`
-    &> th:first-child {
-        width:100px;
+    &> th:last-child {
+        width:200px;
     }
 `;

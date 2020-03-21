@@ -1,6 +1,6 @@
 import PostsList from '../pages/ListOfPosts';
 import UsersList from '../pages/ViewPost';
-import PageNotFound from '../pages/PageNotFound';
+import ErrorPage from '../pages/PageNotFound';
 import { APP_ROUTES } from './constants';
 
 const routes = [
@@ -14,7 +14,7 @@ const routes = [
         isExact: true
     },
     {
-        component: PageNotFound
+        component: ErrorPage
     }
 ];
 

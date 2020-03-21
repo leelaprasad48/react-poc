@@ -4,19 +4,20 @@ import * as types from '../../actionTypes';
 describe('posts reducer', () => {
     const initialState = {
         postsList: [],
-        loading: false,
-        error: false
+        postsLoading: false,
+        postsError: false,
+        postDetails: []
     };
     it('should return initial state', () => {
         expect(postsReducer(undefined, {})).toEqual(initialState);
     });
 
-    it('should return correct loading state on FETCH_ALL_POSTS_IN_PROGRESS action', () => {
+    it('should return correct postsLoading state on FETCH_ALL_POSTS_IN_PROGRESS action', () => {
         expect(postsReducer(initialState, {
             type: types.FETCH_ALL_POSTS_IN_PROGRESS
         })).toEqual({
             ...initialState,
-            loading: true
+            postsLoading: true
         });
     });
 
@@ -40,17 +41,17 @@ describe('posts reducer', () => {
             payload: newPostArray
         })).toEqual({
             ...initialState,
-            loading: false,
+            postsLoading: false,
             postsList: newPostArray
         });
     });
 
-    it('should return error on FETCH_ALL_POSTS_ERROR action', () => {
+    it('should return postsError on FETCH_ALL_POSTS_ERROR action', () => {
         expect(postsReducer(initialState, {
             type: types.FETCH_ALL_POSTS_ERROR
         })).toEqual({
             ...initialState,
-            error: true
+            postsError: true
         });
     });
 });

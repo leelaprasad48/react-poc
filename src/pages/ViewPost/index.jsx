@@ -1,122 +1,152 @@
 /* eslint-disable no-shadow */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { queryParser } from '../../helpers/queryParser';
-import { fetchAllUsers, fetchUserById } from '../../redux/actions';
+import { fetchAllUsers, fetchAllPosts } from '../../redux/actions';
 import userTypePropType from './userTypePropType';
-import { CardsContainer, Card, StyledDiv, CardRow, Website } from './styles';
+import { StyledDiv, Website } from './styles';
+import { APP_ROUTES } from '../../configs/constants';
+import { CardsContainer, Card, StyledButton } from '../../common/styles';
 
-export function ViewPost(props) {
-    const { usersList, history, loading, error, fetchAllUsers, fetchUserById, userData } = props;
-    const { name, email, phone, website, address, company } = userData;
-    const previousQuery = history.location.search;
-    const queryObject = queryParser(previousQuery);
-    const { userId } = queryObject;
-
-    useEffect(() => {
-        if (usersList.length === 0) {
-            fetchAllUsers(userId);
-        } else {
-            fetchUserById(userId);
-        }
-    }, [usersList, fetchAllUsers, fetchUserById, userId]);
-
-    return (
-        <CardsContainer>
-            {loading && (
-                <div id="loading">Loading...</div>
-            )}
-            {error && <div id="error">Something went wrong!</div>}
-            { !error && !loading && !!userData && !!usersList && (
-                <Card>
-                    <StyledDiv id="name" size="20px">
-                        {name}
-                    </StyledDiv>
-                    <StyledDiv id="email">
-                        {email}
-                    </StyledDiv>
-                    <StyledDiv id="phone">
-                        {phone}
-                    </StyledDiv>
-                    <CardRow>
-                        <StyledDiv id="address">Address</StyledDiv>
-                        <StyledDiv>
-                            <StyledDiv id="suite">
-                                {address && address.suite}
-                            </StyledDiv>
-                            <StyledDiv id="street">
-                                {address && address.street}
-                            </StyledDiv>
-                            <StyledDiv id="city">
-                                {address && address.city}
-                            </StyledDiv>
-                            <StyledDiv id="zipcode">
-                                {address && address.zipcode}
-                            </StyledDiv>
-                        </StyledDiv>
-                    </CardRow>
-                    <CardRow>
-                        <StyledDiv>Company</StyledDiv>
-                        <StyledDiv>
-                            <StyledDiv id="companyname">
-                                {company && company.name}
-                            </StyledDiv>
-                            <StyledDiv id="catchphrase" size="12px">
-                                {company && company.catchPhrase}
-                            </StyledDiv>
-
-                        </StyledDiv>
-                    </CardRow>
-                    <a href={`https://${userData.website}`} id="website">
-                        <Website>
-                            {website}
-                        </Website>
-                    </a>
-                </Card>
-            )}
-        </CardsContainer>
-    );
-}
-
-const mapStateToProps = (state) => {
-    const { usersReducer } = state;
-    return usersReducer;
-};
-
-ViewPost.propTypes = {
-    error: PropTypes.bool.isRequired,
+const propTypes = {
+    fetchAllPosts: PropTypes.func.isRequired,
     fetchAllUsers: PropTypes.func.isRequired,
-    fetchUserById: PropTypes.func.isRequired,
     history: PropTypes.shape({
         location: PropTypes.shape({
             search: PropTypes.string.isRequired
         }).isRequired,
         push: PropTypes.func.isRequired
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
-    userData: userTypePropType,
-    usersList: PropTypes.arrayOf(userTypePropType).isRequired
+    postsReducer: PropTypes.shape({
+        postDetails: PropTypes.Object,
+        postsError: PropTypes.bool.isRequired,
+        postsList: PropTypes.array,
+        postsLoading: PropTypes.bool.isRequired
+    }).isRequired,
+
+    usersReducer: PropTypes.shape({
+        usersError: PropTypes.bool.isRequired,
+        usersList: PropTypes.arrayOf(userTypePropType).isRequired,
+        usersLoading: PropTypes.bool.isRequired
+    }).isRequired
 };
-ViewPost.defaultProps = {
-    userData: {
-        address: {
-            city: undefined,
-            street: undefined,
-            suite: undefined,
-            zipcode: undefined
-        },
-        company: {
-            bs: undefined,
-            catchPhrase: undefined,
-            name: undefined
-        },
-        id: undefined,
-        name: undefined,
-        phone: undefined,
-        username: undefined,
-        website: undefined
+export class ViewPost extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            postsList: [],
+            postDetails: {}
+        };
     }
+
+    componentDidMount() {
+        const { postsReducer: { postsList }, fetchAllPosts, usersReducer: { usersList }, fetchAllUsers } = this.props;
+        if (postsList.length === 0) {
+            fetchAllPosts();
+        } else {
+            const previousQuery = this.props.history.location.search;
+            const queryObject = queryParser(previousQuery);
+            const { postId } = queryObject;
+            const singlePostDetails = postsList.filter((post) => post.id === Number(postId))[0];
+            this.setState({
+                postDetails: singlePostDetails
+            });
+        }
+        if (usersList.length === 0) {
+            fetchAllUsers();
+        }
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const { postsReducer: { postsList: postsListProps }, history } = props;
+        const previousQuery = history.location.search;
+        const queryObject = queryParser(previousQuery);
+        const { postId } = queryObject;
+
+        const singlePostDetails = postsListProps.filter((post) => post.id === Number(postId))[0];
+        if (postsListProps !== state.postsList) {
+            return {
+                postsList: postsListProps,
+                postDetails: singlePostDetails
+            };
+        }
+
+        return null;
+    }
+
+    backToHome() {
+        this.props.history.push(APP_ROUTES.LIST_OF_POSTS);
+    }
+
+    renderBackToHome() {
+        return (
+            <StyledButton id="backtohome" onClick={() => this.backToHome()}>Back to Home</StyledButton>
+        );
+    }
+
+    renderErrorComponent() {
+        return (
+            <CardsContainer>
+                <Card>
+                    {this.renderBackToHome()}
+                    <div>No post details found</div>
+                </Card>
+            </CardsContainer>
+
+        );
+    }
+
+    render() {
+        const { postsReducer: { postsError, postsLoading }, usersReducer: { usersList, usersError, usersLoading } } = this.props;
+        const { postDetails } = this.state;
+        if (postsLoading || usersLoading) {
+            return (<div>Loading</div>);
+        }
+        if (postsError || usersError) {
+            return (<div>something went wrong</div>);
+        }
+        if (Object.keys(usersList).length > 0 && postDetails) {
+            const userDetails = usersList.filter((user) => user.id === postDetails.userId)[0];
+            return (
+                <CardsContainer>
+                    <Card>
+                        {this.renderBackToHome()}
+                        <blockquote>
+                            <StyledDiv id="title" size="20px">
+                                {postDetails.title}
+                            </StyledDiv>
+                            <footer id="body">
+                                {postDetails.body}
+                                {' by '}
+                                <cite id="name">
+                                    {userDetails.name}
+                                </cite>
+                            </footer>
+                        </blockquote>
+                        <a href={`https://${userDetails.website}`} id="website">
+                            <Website>
+                                {userDetails.website}
+                            </Website>
+                        </a>
+
+                    </Card>
+                </CardsContainer>
+            );
+        }
+        return this.renderErrorComponent();
+    }
+}
+
+const mapStateToProps = (state) => {
+    const { usersReducer, postsReducer } = state;
+    return {
+        usersReducer,
+        postsReducer
+    };
 };
-export default connect(mapStateToProps, { fetchAllUsers, fetchUserById })(withRouter(ViewPost));
+
+ViewPost.propTypes = propTypes;
+
+export default connect(mapStateToProps, { fetchAllUsers, fetchAllPosts })(withRouter(ViewPost));

@@ -20,22 +20,6 @@ export const Card = Styled.div`
     display: flex;
     flex-direction: column;
 `;
-export const CardRow = Styled.div`
-    display: flex;
-    flex-direction: row;
-    /*justify-content: flex-start; */
-`;
-
-export const StyledDiv = Styled.div`
-    font-size: ${(props) => (props.size ? props.size : '15px')};
-    padding: 5px 5px 5px;
-    width: 100%;
-`;
-
-export const Website = Styled.div`
-    padding: 10px;
-    color: '#ff0000'
-`;
 
 export const StyledButton = Styled.button`
     width: 200px;

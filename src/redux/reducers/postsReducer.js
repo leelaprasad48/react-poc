@@ -2,8 +2,9 @@ import { FETCH_ALL_POSTS, FETCH_ALL_POSTS_SUCCESS, FETCH_ALL_POSTS_IN_PROGRESS, 
 
 const initialState = {
     postsList: [],
-    loading: false,
-    error: false
+    postsLoading: false,
+    postsError: false,
+    postDetails: []
 };
 
 export default function (state = initialState, action) {
@@ -14,23 +15,25 @@ export default function (state = initialState, action) {
     case FETCH_ALL_POSTS_IN_PROGRESS: {
         return {
             ...state,
-            loading: true
+            postsLoading: true
         };
     }
     case FETCH_ALL_POSTS_SUCCESS: {
         return {
             ...state,
-            loading: false,
-            postsList: state.postsList.concat(action.payload)
+            postsList: state.postsList.concat(action.payload),
+            postsLoading: false,
+            postsError: false
         };
     }
     case FETCH_ALL_POSTS_ERROR: {
         return {
             ...state,
-            loading: false,
-            error: true
+            postsLoading: false,
+            postsError: true
         };
     }
+
     default:
         return state;
     }
