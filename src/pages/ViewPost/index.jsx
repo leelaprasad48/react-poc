@@ -102,10 +102,10 @@ export class ViewPost extends React.Component {
         const { postsReducer: { postsError, postsLoading }, usersReducer: { usersList, usersError, usersLoading } } = this.props;
         const { postDetails } = this.state;
         if (postsLoading || usersLoading) {
-            return (<div>Loading</div>);
+            return (<div id="loading">Loading...</div>);
         }
         if (postsError || usersError) {
-            return (<div>something went wrong</div>);
+            return (<div id="error">Something went wrong!</div>);
         }
         if (Object.keys(usersList).length > 0 && postDetails) {
             const userDetails = usersList.filter((user) => user.id === postDetails.userId)[0];

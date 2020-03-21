@@ -74,4 +74,13 @@ describe('ViewPost', () => {
         wrapper.find('button#backtohome').prop('onClick')();
         expect(defaultProps.history.push).toBeCalledWith(APP_ROUTES.LIST_OF_POSTS);
     });
+
+    it('should show loading when users are loading', () => {
+        const wrapper = getWrapper({ ...defaultProps, usersReducer: { usersList: [], usersError: false, usersLoading: true } });
+        expect(wrapper.find('div#loading').text()).toEqual('Loading...');
+    });
+    it('should show error when api fails', () => {
+        const wrapper = getWrapper({ ...defaultProps, usersReducer: { usersList: [], usersError: true, usersLoading: false } });
+        expect(wrapper.find('div#error').text()).toEqual('Something went wrong!');
+    });
 });
