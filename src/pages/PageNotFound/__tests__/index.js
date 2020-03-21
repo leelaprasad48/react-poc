@@ -5,7 +5,7 @@ import { PageNotFound } from '../index';
 import { APP_ROUTES } from '../../../configs/constants';
 
 const defaultProps = {
-    history: { push: jest.fn(), location: { search: '?postId=1' } },
+    history: { push: jest.fn(), location: { search: '?postId=1' } }
 };
 
 // eslint-disable-next-line react/jsx-filename-extension

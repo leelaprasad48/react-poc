@@ -23,6 +23,6 @@ export function PageNotFound({ history }) {
 PageNotFound.propTypes = {
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
-    }).isRequired,
+    }).isRequired
 };
 export default withRouter(PageNotFound);

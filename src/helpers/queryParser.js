@@ -3,7 +3,7 @@ export function queryParser(queryString) {
     const params = {};
 
     let _queryString = queryString.trim();
-    if (_queryString.length === 0) return params;
+    if (_queryString.length === 0) { return params; }
 
     _queryString = (_queryString[0] === '?') ? _queryString.substring(1) : _queryString;
     _queryString = _queryString.trim();

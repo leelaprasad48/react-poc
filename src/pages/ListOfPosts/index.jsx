@@ -68,7 +68,7 @@ ListOfPosts.propTypes = {
             body: PropTypes.string.isRequired,
             id: PropTypes.number.isRequired,
             title: PropTypes.string.isRequired,
-            userId: PropTypes.number.isRequired,
+            userId: PropTypes.number.isRequired
         }).isRequired
     ).isRequired,
     postsLoading: PropTypes.bool.isRequired

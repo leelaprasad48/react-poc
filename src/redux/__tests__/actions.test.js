@@ -27,14 +27,7 @@ describe('posts and users actions', () => {
     });
 
     it('should create an action FETCH_ALL_POSTS_IN_PROGRESS', async () => {
-        // const response = { data: [{ userId: 1, id: 1, title: 'sampleTitle, body: sampleBody' }] };
-        // mockAxios.onGet(API_ROUTES.LIST_OF_POSTS).replyOnce(200, response);
-        const expectedActions = [{ type: types.FETCH_ALL_POSTS_IN_PROGRESS },
-        //      {
-        //     type: types.FETCH_ALL_POSTS_SUCCESS,
-        //     payload: response.data
-        // }
-        ];
+        const expectedActions = [{ type: types.FETCH_ALL_POSTS_IN_PROGRESS }];
         await store.dispatch(fetchAllPosts());
         expect(store.getActions()).toEqual(expectedActions);
     });

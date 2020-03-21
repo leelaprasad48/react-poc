@@ -38,7 +38,7 @@ const defaultProps = {
         usersError: false,
         usersLoading: false
     },
-    history: { push: jest.fn(), location: { search: '?postId=1' } },
+    history: { push: jest.fn(), location: { search: '?postId=1' } }
 };
 
 // eslint-disable-next-line react/jsx-filename-extension
