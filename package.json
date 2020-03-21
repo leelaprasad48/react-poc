@@ -1,6 +1,10 @@
 {
   "name": "react-poc",
   "version": "0.1.0",
+  "engines": {
+    "npm": "6.7.0",
+    "node": "10.15.0"
+  },
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.9.6",
